@@ -1,15 +1,13 @@
---// znc ui
+--// ZNC UI | made by znc and saint 😈
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local lp = Players.LocalPlayer
-
 -- Gui
 local znc = Instance.new("ScreenGui")
 znc.Name = "znc"
 znc.ResetOnSpawn = false
 znc.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 znc.Parent = lp:WaitForChild("PlayerGui")
-
 -- Main Frame
 local mainFrame = Instance.new("ImageButton")
 mainFrame.Name = "mainFrame"
@@ -23,11 +21,9 @@ mainFrame.ImageTransparency = 0.3
 mainFrame.ScaleType = Enum.ScaleType.Crop
 mainFrame.AutoButtonColor = false
 mainFrame.Modal = true
-
 -- UICorner
 local corner = Instance.new("UICorner", mainFrame)
 corner.CornerRadius = UDim.new(0, 14)
-
 -- TextBox
 local TextBox = Instance.new("TextBox", mainFrame)
 TextBox.BackgroundTransparency = 1
@@ -41,29 +37,40 @@ TextBox.TextSize = 14
 TextBox.TextXAlignment = Enum.TextXAlignment.Left
 TextBox.TextYAlignment = Enum.TextYAlignment.Top
 TextBox.ClearTextOnFocus = false
-
 -- Execute Button
 local execute = Instance.new("ImageButton", mainFrame)
 execute.Position = UDim2.new(0.025, 0, 0.87, 0)
 execute.Size = UDim2.new(0, 35, 0, 35)
 execute.BackgroundTransparency = 0.9
-execute.Image = "rbxassetid://10734923549"
-execute.ScaleType = Enum.ScaleType.Fit
-
+execute.Image = ""
 local execCorner = Instance.new("UICorner", execute)
 execCorner.CornerRadius = UDim.new(1, 0)
-
+-- Execute Icon
+local executeIcon = Instance.new("ImageLabel", execute)
+executeIcon.Name = "Icon"
+executeIcon.Size = UDim2.new(0, 20, 0, 20)
+executeIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
+executeIcon.AnchorPoint = Vector2.new(0.5, 0.5)
+executeIcon.BackgroundTransparency = 1
+executeIcon.Image = "rbxassetid://10734923549"
+executeIcon.ImageColor3 = Color3.fromRGB(255, 255, 255)
 -- Clear Button
 local clear = Instance.new("ImageButton", mainFrame)
 clear.Position = UDim2.new(0.1, 0, 0.87, 0)
 clear.Size = UDim2.new(0, 35, 0, 35)
 clear.BackgroundTransparency = 0.9
-clear.Image = "rbxassetid://10723346158"
-clear.ScaleType = Enum.ScaleType.Fit
-
+clear.Image = ""
 local clearCorner = Instance.new("UICorner", clear)
 clearCorner.CornerRadius = UDim.new(1, 0)
-
+-- Clear Icon
+local clearIcon = Instance.new("ImageLabel", clear)
+clearIcon.Name = "Icon"
+clearIcon.Size = UDim2.new(0, 20, 0, 20)
+clearIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
+clearIcon.AnchorPoint = Vector2.new(0.5, 0.5)
+clearIcon.BackgroundTransparency = 1
+clearIcon.Image = "rbxassetid://10723346158"
+clearIcon.ImageColor3 = Color3.fromRGB(255, 255, 255)
 -- Drag Logic
 local dragging, dragInput, dragStart, startPos
 mainFrame.InputBegan:Connect(function(input)
@@ -76,7 +83,6 @@ mainFrame.InputBegan:Connect(function(input)
 		end)
 	end
 end)
-
 UIS.InputChanged:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseMovement then
 		dragInput = input
@@ -87,7 +93,6 @@ UIS.InputChanged:Connect(function(input)
 			startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 	end
 end)
-
 -- Execute logic
 execute.MouseButton1Click:Connect(function()
 	local src = TextBox.Text
@@ -98,7 +103,6 @@ execute.MouseButton1Click:Connect(function()
 		if not s then warn("ZNC error:", e) end
 	end
 end)
-
 clear.MouseButton1Click:Connect(function()
 	TextBox.Text = ""
 end)
