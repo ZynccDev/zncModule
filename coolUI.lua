@@ -208,11 +208,11 @@ local function AINBG_fake_script() -- znc.main_script
 		end
 	end)
 	
-	mainFrame.execute.MouseButton1Click:Connect(function()
+	mainFrame:WaitForChild("execute").MouseButton1Click:Connect(function()
 		loadstring(mainFrame.TextBox.Text)()
 	end)
 	
-	mainFrame.clear.MouseButton1Click:Connect(function()
+	mainFrame:WaitForChild("clear").MouseButton1Click:Connect(function()
 		mainFrame.TextBox.Text = ""
 	end)
 	
