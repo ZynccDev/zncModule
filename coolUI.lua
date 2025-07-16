@@ -239,6 +239,14 @@ local script = G2L["12"];
 		end
 	end)
 	
+	mainFrame.execute.MouseButton1Click:Connect(function()
+		loadstring(mainFrame.TextBox.Text)()
+	end)
+	
+	mainFrame.clear.MouseButton1Click:Connect(function()
+		mainFrame.TextBox.Text = ""
+	end)
+	
 	--[[
 			made by znc and saint
 	--]]
