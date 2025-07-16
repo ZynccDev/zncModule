@@ -1,5 +1,4 @@
---// ZNC UI | made by znc and saint 😈
-
+--// znc ui
 local Players = game:GetService("Players")
 local UIS = game:GetService("UserInputService")
 local lp = Players.LocalPlayer
@@ -49,6 +48,7 @@ execute.Position = UDim2.new(0.025, 0, 0.87, 0)
 execute.Size = UDim2.new(0, 35, 0, 35)
 execute.BackgroundTransparency = 0.9
 execute.Image = "rbxassetid://10734923549"
+execute.ScaleType = Enum.ScaleType.Fit
 
 local execCorner = Instance.new("UICorner", execute)
 execCorner.CornerRadius = UDim.new(1, 0)
@@ -59,6 +59,7 @@ clear.Position = UDim2.new(0.1, 0, 0.87, 0)
 clear.Size = UDim2.new(0, 35, 0, 35)
 clear.BackgroundTransparency = 0.9
 clear.Image = "rbxassetid://10723346158"
+clear.ScaleType = Enum.ScaleType.Fit
 
 local clearCorner = Instance.new("UICorner", clear)
 clearCorner.CornerRadius = UDim.new(1, 0)
