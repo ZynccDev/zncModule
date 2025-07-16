@@ -1,26 +1,70 @@
+--// ZNC UI | made by znc and saint 😈
+
 local Players = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
 local UIS = game:GetService("UserInputService")
+local lp = Players.LocalPlayer
 
-local player = Players.LocalPlayer
-local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-gui.Name = "znc"
-gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-gui.ResetOnSpawn = false
+-- Gui
+local znc = Instance.new("ScreenGui")
+znc.Name = "znc"
+znc.ResetOnSpawn = false
+znc.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+znc.Parent = lp:WaitForChild("PlayerGui")
 
--- Make the mainFrame
+-- Main Frame
 local mainFrame = Instance.new("ImageButton")
 mainFrame.Name = "mainFrame"
-mainFrame.Parent = gui
+mainFrame.Parent = znc
 mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 mainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
-mainFrame.Size = UDim2.new(0, 500, 0, 300)
-mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-mainFrame.ImageTransparency = 1
+mainFrame.Size = UDim2.new(0, 587, 0, 349)
+mainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+mainFrame.Image = "rbxassetid://75284099437343"
+mainFrame.ImageTransparency = 0.3
+mainFrame.ScaleType = Enum.ScaleType.Crop
 mainFrame.AutoButtonColor = false
+mainFrame.Modal = true
 
--- Dragging
-local dragging, dragStart, startPos
+-- UICorner
+local corner = Instance.new("UICorner", mainFrame)
+corner.CornerRadius = UDim.new(0, 14)
+
+-- TextBox
+local TextBox = Instance.new("TextBox", mainFrame)
+TextBox.BackgroundTransparency = 1
+TextBox.Position = UDim2.new(0.025, 0, 0.06, 0)
+TextBox.Size = UDim2.new(0, 552, 0, 277)
+TextBox.Font = Enum.Font.SourceSans
+TextBox.PlaceholderText = "print(\"made by znc and saint\")"
+TextBox.Text = ""
+TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.TextSize = 14
+TextBox.TextXAlignment = Enum.TextXAlignment.Left
+TextBox.TextYAlignment = Enum.TextYAlignment.Top
+TextBox.ClearTextOnFocus = false
+
+-- Execute Button
+local execute = Instance.new("ImageButton", mainFrame)
+execute.Position = UDim2.new(0.025, 0, 0.87, 0)
+execute.Size = UDim2.new(0, 35, 0, 35)
+execute.BackgroundTransparency = 0.9
+execute.Image = "rbxassetid://10734923549"
+
+local execCorner = Instance.new("UICorner", execute)
+execCorner.CornerRadius = UDim.new(1, 0)
+
+-- Clear Button
+local clear = Instance.new("ImageButton", mainFrame)
+clear.Position = UDim2.new(0.1, 0, 0.87, 0)
+clear.Size = UDim2.new(0, 35, 0, 35)
+clear.BackgroundTransparency = 0.9
+clear.Image = "rbxassetid://10723346158"
+
+local clearCorner = Instance.new("UICorner", clear)
+clearCorner.CornerRadius = UDim.new(1, 0)
+
+-- Drag Logic
+local dragging, dragInput, dragStart, startPos
 mainFrame.InputBegan:Connect(function(input)
 	if input.UserInputType == Enum.UserInputType.MouseButton1 then
 		dragging = true
@@ -33,53 +77,27 @@ mainFrame.InputBegan:Connect(function(input)
 end)
 
 UIS.InputChanged:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseMovement and dragging then
+	if input.UserInputType == Enum.UserInputType.MouseMovement then
+		dragInput = input
+	end
+	if input == dragInput and dragging then
 		local delta = input.Position - dragStart
-		mainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+		mainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+			startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 	end
 end)
 
--- TextBox
-local textbox = Instance.new("TextBox", mainFrame)
-textbox.Size = UDim2.new(0.9, 0, 0.7, 0)
-textbox.Position = UDim2.new(0.05, 0, 0.05, 0)
-textbox.TextColor3 = Color3.fromRGB(255, 255, 255)
-textbox.BackgroundTransparency = 0.2
-textbox.TextXAlignment = Enum.TextXAlignment.Left
-textbox.TextYAlignment = Enum.TextYAlignment.Top
-textbox.ClearTextOnFocus = false
-textbox.Font = Enum.Font.Code
-textbox.TextSize = 14
-textbox.PlaceholderText = 'print("made by znc and saint")'
-textbox.Text = ""
-
--- Execute button
-local execute = Instance.new("TextButton", mainFrame)
-execute.Size = UDim2.new(0, 80, 0, 30)
-execute.Position = UDim2.new(0.05, 0, 0.8, 0)
-execute.Text = "Execute"
-execute.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-execute.TextColor3 = Color3.new(1, 1, 1)
-
--- Clear button
-local clear = Instance.new("TextButton", mainFrame)
-clear.Size = UDim2.new(0, 80, 0, 30)
-clear.Position = UDim2.new(0.25, 0, 0.8, 0)
-clear.Text = "Clear"
-clear.BackgroundColor3 = Color3.fromRGB(255, 65, 65)
-clear.TextColor3 = Color3.new(1, 1, 1)
-
--- Button logic
+-- Execute logic
 execute.MouseButton1Click:Connect(function()
-	local source = textbox.Text
-	local success, err = pcall(function()
-		loadstring(source)()
-	end)
-	if not success then
-		warn("ZNC ERROR:", err)
+	local src = TextBox.Text
+	if src and src ~= "" then
+		local s, e = pcall(function()
+			loadstring(src)()
+		end)
+		if not s then warn("ZNC error:", e) end
 	end
 end)
 
 clear.MouseButton1Click:Connect(function()
-	textbox.Text = ""
+	TextBox.Text = ""
 end)
