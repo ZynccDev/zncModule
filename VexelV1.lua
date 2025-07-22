@@ -108,7 +108,7 @@ TextLabel.Size = UDim2.new(0, 107, 0, 35)
 TextLabel.Font = Enum.Font.Unknown
 TextLabel.Text = "Vexel | Steak"
 TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel.TextSize = 17
+TextLabel.TextSize = 14
 TextLabel.TextWrapped = true
 
 close.Name = "close"
